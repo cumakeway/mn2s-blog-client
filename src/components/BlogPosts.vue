@@ -10,7 +10,6 @@ const loading = ref(true);
 const fetchPosts = async () => {
   try {
     const response = await axios.get(`${apiUrl}posts`);
-    console.log(response);
     posts.value = response.data.data; 
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -41,14 +40,16 @@ onMounted(fetchPosts);
       </div>
 
       <div v-for="post in posts" :key="post.id" class="row mb-3">
+        <router-link :to="`/posts/${post.id}`" class="text-decoration-none">
           <div class="card h-100 shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ post.title }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Date posted: {{moment(post.date_posted).format('MMMM Do YYYY, h:mm:ss a')}} {{  }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Date posted: {{moment(post.date_posted).format('MMMM Do YYYY, h:mm:ss a')}}</h6>
               <div v-html="post.excerpt" class="card-text"></div>
               <a href="#" class="btn btn-primary">Read More...</a>
             </div>
           </div>
+        </router-link>
         </div>
 
     
